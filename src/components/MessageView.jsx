@@ -66,36 +66,49 @@ export default function MessageView({ chatId }) {
                         <div className='absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-pulse shadow-lg'></div>
                         <div className='absolute -bottom-2 -left-2 w-4 h-4 bg-yellow-400 rounded-full animate-ping'></div>
                     </div>
-                    <h3 className='text-3xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent mb-4'>
+                    <h3 className='text-3xl font-bold text-gray-800 mb-4'>
                         Welcome to AI Chat ✨
                     </h3>
-                    <p className='text-gray-400 text-lg leading-relaxed'>
-                        Select a chat from the sidebar or create a new one to start your conversation with AI
+                    <p className='text-gray-700 text-lg leading-relaxed mb-6'>
+                        Click "New Chat" in the sidebar to start your conversation with AI
                     </p>
+                    <div className='bg-white/90 backdrop-blur-sm border border-blue-200 rounded-xl p-4 mb-8 shadow-lg'>
+                        <div className='flex items-center gap-3'>
+                            <div className='w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center'>
+                                <svg className='w-5 h-5 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' />
+                                </svg>
+                            </div>
+                            <div>
+                                <p className='text-blue-600 font-medium text-sm'>Getting Started</p>
+                                <p className='text-gray-600 text-xs'>Create a new chat to begin messaging</p>
+                            </div>
+                        </div>
+                    </div>
                     <div className='mt-8 flex justify-center gap-6'>
                         <div className='text-center'>
                             <div className='w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-2'>
-                                <svg className='w-6 h-6 text-blue-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                     <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M13 10V3L4 14h7v7l9-11h-7z' />
                                 </svg>
                             </div>
-                            <p className='text-xs text-gray-500'>Fast</p>
+                            <p className='text-xs text-gray-600'>Fast</p>
                         </div>
                         <div className='text-center'>
                             <div className='w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-2'>
-                                <svg className='w-6 h-6 text-purple-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <svg className='w-6 h-6 text-purple-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                     <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' />
                                 </svg>
                             </div>
-                            <p className='text-xs text-gray-500'>Smart</p>
+                            <p className='text-xs text-gray-600'>Smart</p>
                         </div>
                         <div className='text-center'>
                             <div className='w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-2'>
-                                <svg className='w-6 h-6 text-green-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <svg className='w-6 h-6 text-green-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                     <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z' />
                                 </svg>
                             </div>
-                            <p className='text-xs text-gray-500'>Helpful</p>
+                            <p className='text-xs text-gray-600'>Helpful</p>
                         </div>
                     </div>
                 </div>
@@ -221,7 +234,7 @@ export default function MessageView({ chatId }) {
                 </div>
             </div>
 
-            {/* Input Area */}
+            {/* Input Area - ENABLED when chatId exists and valid */}
             <div className='border-t border-white/10 bg-slate-900/50 backdrop-blur-xl relative z-10'>
                 <form onSubmit={handleSubmit} className='max-w-4xl mx-auto p-6'>
                     <div className='flex gap-4 items-end'>
@@ -230,66 +243,95 @@ export default function MessageView({ chatId }) {
                                 type='text'
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
-                                placeholder='Type your message...'
-                                className='w-full px-6 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 focus:bg-white/20 transition-all duration-300 pr-12'
-                                disabled={sending}
-                                autoFocus
+                                placeholder={!chatId ? 'Please create a new chat first to start messaging...' : 'Type your message here...'}
+                                className={`w-full px-6 py-4 backdrop-blur-sm border rounded-2xl transition-all duration-300 ${!chatId
+                                    ? 'bg-white/5 border-white/10 text-gray-500 placeholder-gray-500 cursor-not-allowed'
+                                    : `bg-white/10 border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:bg-white/15 ${sending ? 'opacity-50' : ''}`
+                                    }`}
+                                disabled={!chatId || sending}
                             />
-                            {message && (
-                                <button
-                                    type='button'
-                                    onClick={() => setMessage('')}
-                                    className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors'
-                                >
+                            {!chatId && (
+                                <div className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500'>
                                     <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+                                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z' />
                                     </svg>
-                                </button>
+                                </div>
+                            )}
+                            {sending && chatId && (
+                                <div className='absolute right-4 top-1/2 transform -translate-y-1/2'>
+                                    <svg className='animate-spin h-5 w-5 text-blue-400' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
+                                        <circle className='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' strokeWidth='4'></circle>
+                                        <path className='opacity-75' fill='currentColor' d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'></path>
+                                    </svg>
+                                </div>
                             )}
                         </div>
                         <button
                             type='submit'
-                            disabled={sending || !message.trim()}
-                            className='bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-2xl hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:hover:scale-100 relative overflow-hidden group'
+                            disabled={!chatId || sending || !message.trim()}
+                            className={`p-4 rounded-2xl transition-all duration-300 flex items-center gap-2 shadow-lg ${!chatId || sending || !message.trim()
+                                ? 'bg-gradient-to-r from-gray-600 to-gray-700 text-gray-400 opacity-50 cursor-not-allowed'
+                                : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-xl hover:scale-105 active:scale-95'
+                                }`}
                         >
-                            <div className='absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000'></div>
-                            {sending ? (
-                                <svg className='animate-spin h-6 w-6 text-white relative z-10' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
-                                    <circle className='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' strokeWidth='4'></circle>
-                                    <path className='opacity-75' fill='currentColor' d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'></path>
+                            {!chatId ? (
+                                <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z' />
                                 </svg>
                             ) : (
-                                <svg className='w-6 h-6 relative z-10' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                     <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 19l9 2-9-18-9 18 9-2zm0 0v-8' />
                                 </svg>
                             )}
+                            {sending && chatId && <span className='text-sm'>Sending...</span>}
                         </button>
                     </div>
 
-                    {/* Quick actions */}
+                    {/* Quick actions - ENABLED only when chatId exists */}
                     <div className='flex gap-2 mt-4'>
                         <button
                             type='button'
-                            onClick={() => setMessage('Hello! How can you help me today?')}
-                            className='text-xs px-3 py-2 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-lg transition-all duration-200 border border-white/10 hover:border-white/20'
+                            onClick={() => chatId && setMessage('👋 Hello! How are you?')}
+                            disabled={!chatId}
+                            className={`text-xs px-3 py-2 rounded-lg transition-colors border ${!chatId
+                                ? 'bg-white/5 text-gray-500 border-white/10 opacity-50 cursor-not-allowed'
+                                : 'bg-white/10 text-gray-300 border-white/20 hover:bg-white/20'
+                                }`}
                         >
                             👋 Say Hello
                         </button>
                         <button
                             type='button'
-                            onClick={() => setMessage('Can you explain how you work?')}
-                            className='text-xs px-3 py-2 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-lg transition-all duration-200 border border-white/10 hover:border-white/20'
+                            onClick={() => chatId && setMessage('How do you work?')}
+                            disabled={!chatId}
+                            className={`text-xs px-3 py-2 rounded-lg transition-colors border ${!chatId
+                                ? 'bg-white/5 text-gray-500 border-white/10 opacity-50 cursor-not-allowed'
+                                : 'bg-white/10 text-gray-300 border-white/20 hover:bg-white/20'
+                                }`}
                         >
                             🤔 How do you work?
                         </button>
                         <button
                             type='button'
-                            onClick={() => setMessage('What can you help me with?')}
-                            className='text-xs px-3 py-2 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-lg transition-all duration-200 border border-white/10 hover:border-white/20'
+                            onClick={() => chatId && setMessage('What can you help me with?')}
+                            disabled={!chatId}
+                            className={`text-xs px-3 py-2 rounded-lg transition-colors border ${!chatId
+                                ? 'bg-white/5 text-gray-500 border-white/10 opacity-50 cursor-not-allowed'
+                                : 'bg-white/10 text-gray-300 border-white/20 hover:bg-white/20'
+                                }`}
                         >
                             ✨ What can you do?
                         </button>
                     </div>
+
+                    {/* Call to action when no chat */}
+                    {!chatId && (
+                        <div className='mt-4 text-center'>
+                            <p className='text-gray-500 text-sm'>
+                                ← Click "New Chat" in the sidebar to start a conversation
+                            </p>
+                        </div>
+                    )}
                 </form>
             </div>
 
