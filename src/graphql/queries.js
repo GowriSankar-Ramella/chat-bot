@@ -27,20 +27,26 @@ export const GET_MESSAGES = gql`
   }
 `
 
+// UPDATED: Removed user_id parameter since it's set automatically via column preset
 export const CREATE_CHAT = gql`
-  mutation CreateChat($title: String!, $user_id: uuid!) {
-    insert_chats_one(object: { title: $title, user_id: $user_id }) {
+  mutation CreateChat($title: String!) {
+    insert_chats_one(object: { title: $title }) {
       id
       title
+      user_id
       created_at
     }
   }
 `
 
+// UPDATED: Removed user_id from message insertion (add column preset for messages table too)
 export const SEND_MESSAGE = gql`
   mutation SendMessage($message: String!, $chat_id: uuid!) {
     insert_messages_one(object: { content: $message, role: "user", chat_id: $chat_id }) {
       id
+      content
+      role
+      created_at
     }
     sendMessage(message: $message, chat_id: $chat_id) {
       message
