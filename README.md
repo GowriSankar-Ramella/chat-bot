@@ -1,12 +1,88 @@
-# React + Vite
+# AI Chat Bot
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive AI-powered chat application built with React, Vite, Apollo Client, and Nhost for authentication and real-time GraphQL backend. The app provides a clean interface for seamless conversations with AI, supports multiple chats, and real-time updates with a premium user experience.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+### 🌟 Multi-Chat Support
+- **Create, select, and delete chats**: Manage multiple conversation threads with the sidebar chat list.
+- **Real-time updates**: New chats and messages appear instantly, thanks to GraphQL subscriptions and polling.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🤖 AI Conversations
+- **Start new conversations**: Click "New Chat" to begin a fresh dialogue with the AI.
+- **Chat messages**: Each chat thread can contain a unique conversation history.
+- **Welcome & Getting Started Prompts**: Friendly onboarding messages guide users to start chatting with AI.
+
+### 🏎️ Fast and Responsive UI
+- **Modern design**: Gradient backgrounds, animated icons, and stylish transitions.
+- **Loading and error states**: Full-screen loaders and error handling provide smooth feedback.
+
+### 🔒 Authentication & User Management
+- **Nhost authentication**: Secure login and session management via Nhost.
+- **Premium user indicator**: Displays user's email and premium status in the sidebar.
+- **Sign out**: Users can log out securely from the sidebar.
+
+### ⚡ Real-Time Experience
+- **WebSocket GraphQL subscriptions**: Instant delivery of new messages and chat updates.
+- **Status indicators**: "Online" and animated presence dots show connectivity.
+
+### 🛠️ Tech Stack
+- **React + Vite**: Fast, modern frontend tooling.
+- **Apollo Client**: GraphQL queries, mutations, and subscriptions.
+- **Nhost**: Managed backend for authentication and GraphQL endpoint.
+- **GraphQL Subscriptions**: Real-time chat updates.
+
+---
+
+## Getting Started
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/GowriSankar-Ramella/chat-bot.git
+   cd chat-bot
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables:**
+   - Set up your Nhost project and configure the following in `.env`:
+     ```
+     VITE_NHOST_SUBDOMAIN=your-nhost-subdomain
+     VITE_NHOST_REGION=your-nhost-region
+     ```
+
+4. **Run the app:**
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## Project Structure
+
+- `src/components/ChatList.jsx`: Sidebar for managing chats (create, select, delete).
+- `src/components/MessageView.jsx`: Main view for chat messages and AI interaction.
+- `src/lib/apollo.js`: Apollo Client setup with WebSocket and HTTP links.
+- `src/lib/nhost.js`: Nhost client initialization for auth and backend.
+- `src/App.jsx`: Main app logic and authentication flow.
+
+---
+
+## Screenshots
+
+> *Add screenshots here to showcase chat list, message view, loading states, etc.*
+
+---
+
+## License
+
+MIT
+
+---
+
+*Built with ❤️ by GowriSankar Ramella*
