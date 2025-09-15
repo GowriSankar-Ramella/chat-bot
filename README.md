@@ -73,11 +73,6 @@ A modern, interactive AI-powered chat application built with React, Vite, Apollo
 
 ---
 
-## Screenshots
-
-> *Add screenshots here to showcase chat list, message view, loading states, etc.*
-
----
 
 ## License
 
@@ -85,4 +80,4 @@ MIT
 
 ---
 
-*Built with ❤️ by GowriSankar Ramella*
+*Built  by GowriSankar Ramella*
